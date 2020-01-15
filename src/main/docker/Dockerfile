@@ -1,4 +1,4 @@
-FROM registry.yy.com:5000/centos
+FROM registry.yy.com:5000/centos-jre:8
 VOLUME /app/tmp
 ADD ebp-eureka-0.0.1.jar /app/ebp-eureka.jar
 ADD lib /app/lib
