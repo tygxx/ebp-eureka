@@ -98,7 +98,7 @@
                         <manifest>
                             <addClasspath>true</addClasspath>
                             <classpathPrefix>lib/</classpathPrefix>
-                            <mainClass>com.yy.ebp.com.yy.ebp.eureka.EurekaApp</mainClass>
+                            <mainClass>com.yy.ebp.eureka.EurekaApp</mainClass>
                         </manifest>
                         <!-- 给清单文件添加键值对(配置文件外置) -->
                         <manifestEntries>
