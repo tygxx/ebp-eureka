@@ -142,7 +142,7 @@
                 <configuration>
                     <!-- 指定Dockerfile的位置 -->
                     <dockerDirectory>src/main/docker</dockerDirectory>
-                    <imageName>registry.eversec.com:5000/${project.artifactId}:${project.version}
+                    <imageName>registry.yy.com:5000/${project.artifactId}:${project.version}
                     </imageName>
                     <resources>
                         <!-- 在构建镜像时使用的文件（配置文件及jar包） -->
