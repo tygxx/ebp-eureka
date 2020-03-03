@@ -32,12 +32,12 @@
     </dependencyManagement>
 
     <dependencies>
-        <!-- eversec-framewrok -->
-        <!--<dependency>-->
-        <!--<groupId>com.eversec.framework</groupId>-->
-        <!--<artifactId>eversec-core</artifactId>-->
-        <!--<version>1.0.0-SNAPSHOT</version>-->
-        <!--</dependency>-->
+        <!-- yy-framewrok -->
+        <dependency>
+            <groupId>com.yy.framework</groupId>
+            <artifactId>yy-core</artifactId>
+            <version>1.0.0-SNAPSHOT</version>
+        </dependency>
 
         <!-- spring cloud -->
         <dependency>
@@ -171,7 +171,7 @@
         <pluginRepository>
             <id>maven-nexus</id>
             <name>maven-nexus</name>
-            <url>http://localhost:8081/nexus/repository/maven-public/</url>
+            <url>http://182.92.98.133:8081/repository/maven-public/</url>
             <releases>
                 <enabled>true</enabled>
             </releases>
@@ -183,9 +183,24 @@
 
     <repositories>
         <repository>
+            <id>alimaven</id>
+            <name>aliyun maven</name>
+            <url>http://maven.aliyun.com/nexus/content/groups/public/</url>
+            <releases>
+                <enabled>true</enabled>
+                <updatePolicy>always</updatePolicy>
+                <checksumPolicy>ignore</checksumPolicy>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+                <updatePolicy>always</updatePolicy>
+                <checksumPolicy>ignore</checksumPolicy>
+            </snapshots>
+        </repository>
+        <repository>
             <id>nexus</id>
             <name>maven-nexus</name>
-            <url>http://localhost:8081/nexus/repository/maven-public</url>
+            <url>http://182.92.98.133:8081/repository/maven-public/</url>
             <releases>
                 <enabled>true</enabled>
             </releases>

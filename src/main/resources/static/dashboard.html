@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="zh_CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+<meta http-equiv="x-ua-compatible" content="ie=edge">
+<title>eversec service center</title>
+
+<!-- Vendors Styles -->
+<link rel="stylesheet" type="text/css" href="assets/vendors/bootstrap/dist/css/bootstrap.min.css">
+
+<!-- Clean UI Admin Template Styles -->
+<link rel="stylesheet" type="text/css" href="assets/common/css/source/main.css">
+
+<!-- Vendors Scripts -->
+<script src="assets/vendors/vue/vue.min.js"></script>
+<script src="assets/vendors/vue/vue-resource.min.js"></script>
+
+</head>
+<body>
+	<!-- Header Block Full -->
+	<div class="cwt__block cwt__header-fixed">
+		<div class="container">
+			<div class="cwt__header-fixed__container">
+				<div class="row">
+					<div class="col-xs-3">
+						<div class="cwt__logo cwt__logo--small">
+<!--							<a href="dashboard.html"> <img-->
+<!--								src="assets/common/img/logo.png" alt="eversec service center"-->
+<!--								style="height: 30px; width: auto; margin-bottom: 10px;" />-->
+<!--							</a>-->
+						</div>
+					</div>
+					<div class="col-xs-9">
+						<nav
+							class="nav nav-inline pull-xs-right cwt__main-menu cwt__main-menu--dark">
+							<div class="cwt__mobile-menu" style="margin-top: 7px;">
+<!--								<a href="http://www.eversaas.cn/" target="_blank" class="nav-link cwt__main-menu__link cwt__main-menu__link&#45;&#45;active cwt__js-click__preview">SaaS</a>-->
+<!--								<a href="http://eversec.com.cn" target="_blank" class="nav-link cwt__main-menu__link cwt__js-click__gallery">官网</a>-->
+							</div>
+						</nav>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Preview Block -->
+	<!--     <div class="cwt__block cwt__preview">
+        <div class="cwt__preview__container">
+            <div class="cwt__preview__title">
+                EverSec
+                <br />
+               Service Center
+            </div>
+            <a href="javascript:void(0)" class="btn btn-primary cwt__action__button">
+               Status <br /><small>eversec service</small>
+            </a>
+        </div>
+    </div> -->
+
+	<br>
+	<br>
+
+	<div id="app" class="container">
+		<div class="row">
+		
+			<div class="cwt__block cwt__features" style="padding-bottom: 1px;">
+                <h1 class="cwt__block-title">
+                	<a href="javascript:void(0)" v-on:click="clickSystem()">SYSTEM INFO</a>
+                </h1>
+                <div class="cwt__features__container" v-show="showSystem">
+                    <div class="row">
+                    	<div class="col-lg-4 col-md-6">
+                            <div class="cwt__features__item">
+                                <i class="cwt__features__icon icmn icmn-location2"></i>
+                                <span class="cwt__features__title">
+                                    IP
+                                </span>
+                                <div class="cwt__features__descr">
+                                    {{status.instance.ipAddr}}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-6">
+                            <div class="cwt__features__item">
+                                <i class="cwt__features__icon icmn icmn-display"></i>
+                                <span class="cwt__features__title">
+                                    HOST NAME
+                                </span>
+                                <div class="cwt__features__descr">
+                                    {{status.instance.hostName}}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-6">
+                            <div class="cwt__features__item">
+                                <i class="cwt__features__icon icmn icmn-warning"></i>
+                                <span class="cwt__features__title">
+                                    STATUS
+                                </span>
+                                <div class="cwt__features__descr">
+                                    {{status.instance.status}}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-6" v-for="(s, key) in status">
+                            <div class="cwt__features__item" v-if="key != 'instance'">
+                                <i class="cwt__features__icon icmn icmn icmn-info"></i>
+                                <span class="cwt__features__title">
+                                    {{key}}
+                                </span>
+                                <div class="cwt__features__descr">
+                                    {{s}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+			<div class="cwt__block cwt__gallery" style="padding: 15px;">
+				<h1 class="cwt__block-title">SERVICE LIST</h1>
+				<table class="table table-bordered table-hover">
+					<thead>
+						<tr class="active">
+							<th>SERVICE NAME</th>
+							<th>INSTANCE NUM</th>
+							<th>INSTAINCE LIST</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr v-for="app in applications">
+							<td style="text-align: left;vertical-align: middle;">{{app.name}}</td>
+							<td style="text-align: left;font-weight: bold; vertical-align: middle;">({{app.instance.length}})</td>
+							<td style="text-align: left;">
+								<span style="display: block" v-for="instance in app.instance">
+									{{instance.instanceId}} 【{{instance.ipAddr}}】
+									<span style="font-weight: bold;" v-bind:style="{'color': instance.status=='UP'? 'green': 'red'}"> ({{instance.status}})</span>
+									&nbsp;&nbsp; 
+									<a target="_blank" v-bind:href="instance.homePageUrl + 'swagger.html'"> api </a>
+									&nbsp;&nbsp; 
+									<a target="_blank" v-bind:href="instance.homePageUrl + 'swagger-ui.html'"> swagger-ui </a> 
+									&nbsp;&nbsp; 
+									<a target="_blank" v-bind:href="instance.healthCheckUrl"> health </a>
+									&nbsp;&nbsp; 
+									<a href="#" v-if="instance.status=='UP'" v-on:click="offline(app, instance)"> offine </a>
+									&nbsp;&nbsp; 
+									<a href="#" v-if="instance.status=='OUT_OF_SERVICE'" v-on:click="online(app, instance)"> online </a>
+								</span>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+
+		</div>
+	</div>
+
+	<script type="text/javascript">
+		window.onload = function() {
+			var vm = new Vue({
+				el : '#app',
+				data : {
+					applications : [],
+					status: {},
+					showSystem: false,
+				},
+				methods : {
+					init: function() {
+						var showSystem = window.localStorage.getItem("showSystem");
+						if(showSystem) {
+							this.showSystem = JSON.parse(showSystem);
+						}
+						
+						this.getApps();
+						this.getStatus();
+					},
+					clickSystem: function() {
+						this.showSystem = !this.showSystem;
+						window.localStorage.setItem("showSystem", this.showSystem);
+					},
+					getApps : function() {
+						this.$http.get('./dashboard/services').then(
+							function(res) {
+								this.applications = res.body.body;
+							}, function() {
+								console.log('请求失败处理');
+							}
+						);
+					},
+					getStatus : function() {
+						this.$http.get('./dashboard/status').then(
+							function(res) {
+								this.status = res.body.body;
+							}, function() {
+								console.log('请求失败处理');
+							}
+						);
+					},
+					offline : function(app, instance) {
+						this.$http.put('./eureka/apps/' + app.name + '/' + instance.instanceId + '/status?value=OUT_OF_SERVICE').then(
+						 	function(res) {
+						 		this.getApps();
+						 	}, function() {
+						 		console.log('请求失败处理');
+						 	}
+						);
+					},
+					online : function(app, instance) {
+						this.$http.put('./eureka/apps/' + app.name + '/' + instance.instanceId + '/status?value=UP').then(
+						 	function(res) {
+						 		this.getApps();
+						 	}, function() {
+						 		console.log('请求失败处理');
+						 	}
+						);
+					}
+				}
+			});
+			vm.init();
+		}
+	</script>
+</body>
+</html>
