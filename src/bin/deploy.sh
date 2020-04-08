@@ -1,6 +1,6 @@
 #!/bin/
 src="/home/svnproject/ebp-eureka"
-dist="/home/eversunshine/ebp-eureka/"
+dist="/home/yy/ebp-eureka/"
 
 echo $src
 echo $dist
